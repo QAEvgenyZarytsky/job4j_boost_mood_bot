@@ -1,4 +1,4 @@
-package ru.job4j.logic_service;
+package ru.job4j.logic;
 
 public class AchievementService {
 }
