@@ -14,6 +14,7 @@ public class Main {
 
     @Bean
     public CommandLineRunner initTelegramApi(ApplicationContext ctx) {
+
         return args -> {
             var bot = ctx.getBean(ru.job4j.bmb.TelegramBotService.class);
             bot.receive(new ru.job4j.bmb.Content());
