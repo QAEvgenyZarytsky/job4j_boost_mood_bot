@@ -1,6 +1,7 @@
 package ru.job4j.bmb;
 
-import org.jvnet.hk2.annotations.Service;
+
+import org.springframework.stereotype.Service;
 
 @Service
 public class BotCommandHandler {
