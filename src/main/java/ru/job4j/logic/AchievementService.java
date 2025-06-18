@@ -14,6 +14,7 @@ public class AchievementService {
 
     @PreDestroy
     public void destroy() {
+
         System.out.println("AchievementService destroy");
     }
 }

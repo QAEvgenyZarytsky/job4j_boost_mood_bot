@@ -14,6 +14,7 @@ public class MoodService {
 
     @PreDestroy
     public  void destroy() {
+
         System.out.println("MoodService destroy");
     }
 }

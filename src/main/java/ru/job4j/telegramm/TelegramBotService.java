@@ -14,6 +14,7 @@ public class TelegramBotService {
 
     @PreDestroy
     public void destroy() {
+
         System.out.println("TelegramBotService destroy!");
     }
 }

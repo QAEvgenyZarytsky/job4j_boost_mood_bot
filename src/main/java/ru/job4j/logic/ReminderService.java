@@ -13,6 +13,7 @@ public class ReminderService {
 
     @PreDestroy
     public void destroy() {
+
         System.out.println("ReminderService destroy");
     }
 }
