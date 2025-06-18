@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import ru.job4j.bmb.config.AppConfig;
-import ru.job4j.bmb.content.Content;
 import ru.job4j.bmb.services.TelegramBotService;
 
 @SpringBootApplication
@@ -20,6 +19,10 @@ public class Main {
         return args -> {
             var bot = ctx.getBean(AppConfig.class);
             bot.getInfo();
+            var getBeans = ctx.getBean(TelegramBotService.class);
+
+            getBeans.setBeanName("BeanName");
+            getBeans.displayAllBeanNames();
         };
     }
 }
