@@ -1,6 +1,5 @@
 package ru.job4j.bmb.services;
 
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -50,7 +49,6 @@ public class TgRemoteService extends TelegramLongPollingBot {
         inline.setCallbackData(data);
         return inline;
     }
-
 
     public SendMessage sendButtons(long chatId) {
         SendMessage message = new SendMessage();
