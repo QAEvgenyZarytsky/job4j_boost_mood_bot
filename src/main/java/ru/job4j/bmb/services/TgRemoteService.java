@@ -20,7 +20,7 @@ public class TgRemoteService extends TelegramLongPollingBot {
 
     private final String botName;
     private final String botToken;
-    static Map<String, String> MOOD_RESP = new HashMap<>();
+    static Map<String, String> moodList = new HashMap<>();
 
     public TgRemoteService(@Value("${telegram.bot.name}") String botName,
                            @Value("${telegram.bot.token}") String botToken) {
@@ -29,11 +29,11 @@ public class TgRemoteService extends TelegramLongPollingBot {
     }
 
     static {
-        MOOD_RESP.put("lost_sock", "Носки — это коварные создания. Но не волнуйся, второй обязательно найдётся!");
-        MOOD_RESP.put("cucumber", "Огурец тоже дело серьёзное! Главное, не мариноваться слишком долго.");
-        MOOD_RESP.put("dance_ready", "Супер! Танцуй, как будто никто не смотрит. Или, наоборот, как будто все смотрят!");
-        MOOD_RESP.put("need_coffee", "Кофе уже в пути! Осталось только подождать... И ещё немного подождать...");
-        MOOD_RESP.put("sleepy", "Пора на боковую! Даже супергерои отдыхают, ты не исключение.");
+        moodList.put("lost_sock", "Носки — это коварные создания. Но не волнуйся, второй обязательно найдётся!");
+        moodList.put("cucumber", "Огурец тоже дело серьёзное! Главное, не мариноваться слишком долго.");
+        moodList.put("dance_ready", "Супер! Танцуй, как будто никто не смотрит. Или, наоборот, как будто все смотрят!");
+        moodList.put("need_coffee", "Кофе уже в пути! Осталось только подождать... И ещё немного подождать...");
+        moodList.put("sleepy", "Пора на боковую! Даже супергерои отдыхают, ты не исключение.");
     }
 
     private void send(SendMessage message) {
@@ -87,7 +87,7 @@ public class TgRemoteService extends TelegramLongPollingBot {
         if (update.hasCallbackQuery()) {
             var data = update.getCallbackQuery().getData();
             var chatId = update.getCallbackQuery().getMessage().getChatId();
-            send(new SendMessage(String.valueOf(chatId), MOOD_RESP.get(data)));
+            send(new SendMessage(String.valueOf(chatId), moodList.get(data)));
         }
         if (update.hasMessage() && update.getMessage().hasText()) {
             long chatId = update.getMessage().getChatId();
