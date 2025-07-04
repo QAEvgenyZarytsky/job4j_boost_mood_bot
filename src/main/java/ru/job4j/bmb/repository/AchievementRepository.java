@@ -21,6 +21,4 @@ public interface AchievementRepository extends CrudRepository<Achievement, Integ
     long countByUser(User user);
 
     void deleteByAward(Award award);
-
-
 }
