@@ -13,6 +13,7 @@ public class User {
         this.clientId = clientId;
         this.id = id;
     }
+    public User() {}
 
     public long getChatId() {
         return chatId;
