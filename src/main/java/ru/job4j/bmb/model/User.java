@@ -1,11 +1,19 @@
 package ru.job4j.bmb.model;
 
 import java.util.Objects;
+import jakarta.persistence.*;
+
+
 
 public class User {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "client_id")
     private long clientId;
+
+    @Column(name = "chat_id")
     private long chatId;
 
     public User(long chatId, long clientId, Long id) {
@@ -41,15 +49,14 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return getClientId() == user.getClientId() && getChatId() == user.getChatId() && Objects.equals(getId(), user.getId());
+        return Objects.equals(id, user.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getClientId(), getChatId());
+        return Objects.hash(id);
     }
 }
