@@ -1,9 +1,8 @@
 package ru.job4j.bmb.model;
 
 import java.util.Objects;
+
 import jakarta.persistence.*;
-
-
 
 public class User {
     @Id
@@ -21,7 +20,9 @@ public class User {
         this.clientId = clientId;
         this.id = id;
     }
-    public User() {}
+
+    public User() {
+    }
 
     public long getChatId() {
         return chatId;
