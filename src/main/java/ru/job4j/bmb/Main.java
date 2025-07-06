@@ -48,29 +48,41 @@ public class Main {
                 return;
             }
             var data = new ArrayList<MoodContent>();
-            data.add(new MoodContent(new Mood("Счастливейший на свете \uD83D\uDE0E", true), "Невероятно! Вы сияете от счастья, продолжайте радоваться жизни."));
+            data.add(new MoodContent(new Mood("Счастливейший на свете \uD83D\uDE0E", true),
+                    "Невероятно! Вы сияете от счастья, продолжайте радоваться жизни."));
 
-            data.add(new MoodContent(new Mood("Воодушевленное настроение \uD83C\uDF1F", true), "Великолепно! Вы чувствуете себя на высоте. Продолжайте в том же духе."));
+            data.add(new MoodContent(new Mood("Воодушевленное настроение \uD83C\uDF1F", true),
+                    "Великолепно! Вы чувствуете себя на высоте. Продолжайте в том же духе."));
 
-            data.add(new MoodContent(new Mood("Успокоение и гармония \uD83E\uDDD8\u200D♂\uFE0F", true), "Потрясающе! Вы в состоянии внутреннего мира и гармонии."));
+            data.add(new MoodContent(new Mood("Успокоение и гармония \uD83E\uDDD8\u200D♂\uFE0F", true),
+                    "Потрясающе! Вы в состоянии внутреннего мира и гармонии."));
 
-            data.add(new MoodContent(new Mood("В состоянии комфорта ☺\uFE0F", true), "Отлично! Вы чувствуете себя уютно и спокойно."));
+            data.add(new MoodContent(new Mood("В состоянии комфорта ☺\uFE0F", true),
+                    "Отлично! Вы чувствуете себя уютно и спокойно."));
 
-            data.add(new MoodContent(new Mood("В состоянии комфорта ☺\uFE0F", true), "Отлично! Вы чувствуете себя уютно и спокойно."));
+            data.add(new MoodContent(new Mood("В состоянии комфорта ☺\uFE0F", true),
+                    "Отлично! Вы чувствуете себя уютно и спокойно."));
 
-            data.add(new MoodContent(new Mood("Легкое волнение \uD83C\uDF88", true), "Замечательно! Немного волнения добавляет жизни краски."));
+            data.add(new MoodContent(new Mood("Легкое волнение \uD83C\uDF88", true),
+                    "Замечательно! Немного волнения добавляет жизни краски."));
 
-            data.add(new MoodContent(new Mood("Сосредоточенное настроение \uD83C\uDFAF", true), "Хорошо! Ваш фокус на высоте, используйте это время эффективно."));
+            data.add(new MoodContent(new Mood("Сосредоточенное настроение \uD83C\uDFAF", true),
+                    "Хорошо! Ваш фокус на высоте, используйте это время эффективно."));
 
-            data.add(new MoodContent(new Mood("Тревожное настроение \uD83D\uDE1F", true), "Не волнуйтесь, всё пройдет. Попробуйте расслабиться и найти источник вашего беспокойства."));
+            data.add(new MoodContent(new Mood("Тревожное настроение \uD83D\uDE1F", true),
+                    "Не волнуйтесь, всё пройдет. Попробуйте расслабиться и найти источник вашего беспокойства."));
 
-            data.add(new MoodContent(new Mood("Разочарованное настроение \uD83D\uDE1E", true), "Бывает. Не позволяйте разочарованию сбить вас с толку, всё наладится."));
+            data.add(new MoodContent(new Mood("Разочарованное настроение \uD83D\uDE1E", true),
+                    "Бывает. Не позволяйте разочарованию сбить вас с толку, всё наладится."));
 
-            data.add(new MoodContent(new Mood("Усталое настроение \uD83D\uDE34", true), "Похоже, вам нужен отдых. Позаботьтесь о себе и отдохните."));
+            data.add(new MoodContent(new Mood("Усталое настроение \uD83D\uDE34", true),
+                    "Похоже, вам нужен отдых. Позаботьтесь о себе и отдохните."));
 
-            data.add(new MoodContent(new Mood("Вдохновенное настроение \uD83D\uDCA1", true), "Потрясающе! Вы полны идей и энергии для их реализации."));
+            data.add(new MoodContent(new Mood("Вдохновенное настроение \uD83D\uDCA1", true),
+                    "Потрясающе! Вы полны идей и энергии для их реализации."));
 
-            data.add(new MoodContent(new Mood("Раздраженное настроение \uD83D\uDE20", true), "Попробуйте успокоиться и найти причину раздражения, чтобы исправить ситуацию."));
+            data.add(new MoodContent(new Mood("Раздраженное настроение \uD83D\uDE20", true),
+                    "Попробуйте успокоиться и найти причину раздражения, чтобы исправить ситуацию."));
 
             moodRepository.saveAll(data.stream().map(MoodContent::getMood).toList());
             moodContentRepository.saveAll(data);
