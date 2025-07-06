@@ -41,7 +41,9 @@ public class Main {
     }
 
     @Bean
-    CommandLineRunner loadDatabase(MoodRepository moodRepository, MoodContentRepository moodContentRepository, AwardRepository awardRepository) {
+    CommandLineRunner loadDatabase(MoodRepository moodRepository,
+                                   MoodContentRepository moodContentRepository,
+                                   AwardRepository awardRepository) {
         return args -> {
             var moods = moodRepository.findAll();
             if (!moods.isEmpty()) {
