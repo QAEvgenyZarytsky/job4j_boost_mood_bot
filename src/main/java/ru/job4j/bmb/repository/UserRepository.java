@@ -12,5 +12,4 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     User findByClientId(Long clientId);
 
-    void add(User user);
 }
