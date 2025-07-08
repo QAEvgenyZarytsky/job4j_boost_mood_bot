@@ -22,4 +22,6 @@ public interface MoodLogRepository extends CrudRepository<MoodLog, Long> {
     void deleteByUser(User user);
 
     void deleteByMood(Mood mood);
+
+    List<MoodLog> findByUserAndCreatedAtAfter(User user, long oneWeekAgo);
 }
