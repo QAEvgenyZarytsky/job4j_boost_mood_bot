@@ -3,7 +3,6 @@ package ru.job4j.bmb.services;
 import org.springframework.stereotype.Service;
 import ru.job4j.bmb.content.Content;
 import ru.job4j.bmb.model.Achievement;
-import ru.job4j.bmb.model.Mood;
 import ru.job4j.bmb.model.MoodLog;
 import ru.job4j.bmb.model.User;
 import ru.job4j.bmb.repository.AchievementRepository;
@@ -17,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MoodService {
@@ -42,83 +42,70 @@ public class MoodService {
     }
 
     public Content chooseMood(User user, Long moodId) {
-        Optional<Mood> moodOpt = moodRepository.findById(moodId);
-        if (moodOpt.isEmpty()) {
-            Content errorContent = new Content(user.getChatId());
-            errorContent.setText("Настроение с id " + moodId + " не найдено.");
-            return errorContent;
-        }
-        Mood mood = moodOpt.get();
+        return moodRepository.findById(moodId)
+                .map(mood -> {
+                    MoodLog moodLog = new MoodLog();
+                    moodLog.setUser(user);
+                    moodLog.setMood(mood);
+                    moodLog.setCreatedAt(Instant.now().getEpochSecond());
+                    moodLogRepository.save(moodLog);
 
-        MoodLog moodLog = new MoodLog();
-        moodLog.setUser(user);
-        moodLog.setMood(mood);
-        moodLog.setCreatedAt(Instant.now().getEpochSecond());
-        moodLogRepository.save(moodLog);
-
-        return recommendationEngine.recommendFor(user.getChatId(), moodId);
+                    return recommendationEngine.recommendFor(user.getChatId(), moodId);
+                })
+                .orElseGet(() -> {
+                    Content errorContent = new Content(user.getChatId());
+                    errorContent.setText("Настроение с id " + moodId + " не найдено.");
+                    return errorContent;
+                });
     }
 
     public Optional<Content> weekMoodLogCommand(long chatId, Long clientId) {
-        var userOpt = userRepository.findById(clientId);
-        if (userOpt.isEmpty()) {
-            return Optional.empty();
-        }
-        User user = userOpt.get();
+        return userRepository.findById(clientId)
+                .map(user -> {
+                    long oneWeekAgo = Instant.now().minus(7, ChronoUnit.DAYS).getEpochSecond();
+                    List<MoodLog> userMoodWeekAgo = moodLogRepository.findByUserAndCreatedAtAfter(user, oneWeekAgo);
 
-        long oneWeekAgo = Instant.now().minus(7, ChronoUnit.DAYS).getEpochSecond();
+                    String message = formatMoodLogs(userMoodWeekAgo, "Ваши настроения за последнюю неделю");
 
-        List<MoodLog> userMoodWeekAgo = moodLogRepository.findByUserAndCreatedAtAfter(user, oneWeekAgo);
-
-        String message = formatMoodLogs(userMoodWeekAgo, "Ваши настроения за последнюю неделю");
-
-        Content content = new Content(chatId);
-        content.setText(message);
-        return Optional.of(content);
+                    Content content = new Content(chatId);
+                    content.setText(message);
+                    return content;
+                });
     }
 
     public Optional<Content> monthMoodLogCommand(long chatId, Long clientId) {
-        var userOpt = userRepository.findById(clientId);
-        if (userOpt.isEmpty()) {
-            return Optional.empty();
-        }
-        User user = userOpt.get();
+        return userRepository.findById(clientId)
+                .map(user -> {
+                    long oneMonthAgo = Instant.now().minus(30, ChronoUnit.DAYS).getEpochSecond();
 
-        long oneMonthAgo = Instant.now().minus(30, ChronoUnit.DAYS).getEpochSecond();
+                    List<MoodLog> logs = moodLogRepository.findByUserAndCreatedAtAfter(user, oneMonthAgo);
 
-        List<MoodLog> logs = moodLogRepository.findByUserAndCreatedAtAfter(user, oneMonthAgo);
+                    String message = formatMoodLogs(logs, "Ваши настроения за последний месяц");
 
-        String message = formatMoodLogs(logs, "Ваши настроения за последний месяц");
-
-        Content content = new Content(chatId);
-        content.setText(message);
-        return Optional.of(content);
+                    Content content = new Content(chatId);
+                    content.setText(message);
+                    return content;
+                });
     }
 
     public Optional<Content> awards(long chatId, Long clientId) {
-        var userOpt = userRepository.findById(clientId);
-        if (userOpt.isEmpty()) {
-            return Optional.empty();
-        }
+        return userRepository.findById(clientId)
+                .map(user -> {
+                    List<Achievement> achievements = achievementRepository.findByUser(user);
 
-        User user = userOpt.get();
+                    Content content = new Content(chatId);
 
-        List<Achievement> achievements = achievementRepository.findByUser(user);
+                    if (achievements.isEmpty()) {
+                        content.setText("У вас пока нет наград. Продолжайте поддерживать хорошее настроение!");
+                    } else {
+                        String message = achievements.stream()
+                                .map(ach -> "- " + ach.getAward() + ": " + ach.getCreateAt())
+                                .collect(Collectors.joining("\n", "Ваши награды:\n", ""));
+                        content.setText(message);
+                    }
 
-        if (achievements.isEmpty()) {
-            Content content = new Content(chatId);
-            content.setText("У вас пока нет наград. Продолжайте поддерживать хорошее настроение!");
-            return Optional.of(content);
-        }
-
-        StringBuilder sb = new StringBuilder("Ваши награды:\n");
-        for (Achievement ach : achievements) {
-            sb.append("- ").append(ach.getAward()).append(": ").append(ach.getCreateAt()).append("\n");
-        }
-
-        Content content = new Content(chatId);
-        content.setText(sb.toString());
-        return Optional.of(content);
+                    return content;
+                });
     }
 
     private String formatMoodLogs(List<MoodLog> logs, String title) {
