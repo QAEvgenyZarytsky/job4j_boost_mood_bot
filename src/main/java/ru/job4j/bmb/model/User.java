@@ -66,4 +66,12 @@ public class User {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    public User getfakeUser() {
+        User fakeUser = new User();
+        fakeUser.setId(1L);
+        fakeUser.setClientId(100L);
+        fakeUser.setChatId(12345L);
+        return fakeUser;
+    }
 }

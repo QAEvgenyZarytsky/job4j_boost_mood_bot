@@ -19,12 +19,8 @@ class ReminderServiceTest {
     @Test
     public void whenMoodGood() {
         UserFakeRepository userRepository = new UserFakeRepository();
-
         User fakeUser = new User();
-        fakeUser.setId(1L);
-        fakeUser.setClientId(100L);
-        fakeUser.setChatId(12345L);
-        userRepository.addUser(fakeUser);
+        userRepository.addUser(fakeUser.getfakeUser());
 
         var result = new ArrayList<Content>();
 
@@ -36,7 +32,6 @@ class ReminderServiceTest {
         };
         var moodRepository = new MoodFakeRepository();
         moodRepository.save(new Mood("Good", true));
-
 
         var moodLogRepository = new MoodLogFakeRepository();
         var user = new User();
@@ -62,12 +57,8 @@ class ReminderServiceTest {
     @Test
     public void whenUserVotedTodayThenNoReminderSent() {
         UserFakeRepository userRepository = new UserFakeRepository();
-
         User fakeUser = new User();
-        fakeUser.setId(1L);
-        fakeUser.setClientId(100L);
-        fakeUser.setChatId(12345L);
-        userRepository.addUser(fakeUser);
+        userRepository.addUser(fakeUser.getfakeUser());;
 
         var result = new ArrayList<Content>();
 
@@ -125,12 +116,8 @@ class ReminderServiceTest {
     @Test
     public void whenRemindingUsersThenContentHasCorrectTextAndButtons() {
         UserFakeRepository userRepository = new UserFakeRepository();
-
-        User user = new User();
-        user.setId(1L);
-        user.setClientId(100L);
-        user.setChatId(12345L);
-        userRepository.addUser(user);
+        User fakeUser = new User();
+        userRepository.addUser(fakeUser.getfakeUser());
 
         MoodLogFakeRepository moodLogRepository = new MoodLogFakeRepository();
 
@@ -146,7 +133,6 @@ class ReminderServiceTest {
                 result.add(content);
             }
         };
-
 
         TgUI tgUI = new TgUI(moodRepository);
         ReminderService reminderService = new ReminderService(sentContent, moodLogRepository, userRepository, tgUI);
