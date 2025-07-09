@@ -58,7 +58,7 @@ class ReminderServiceTest {
     public void whenUserVotedTodayThenNoReminderSent() {
         UserFakeRepository userRepository = new UserFakeRepository();
         User fakeUser = new User();
-        userRepository.addUser(fakeUser.getfakeUser());;
+        userRepository.addUser(fakeUser.getfakeUser());
 
         var result = new ArrayList<Content>();
 
