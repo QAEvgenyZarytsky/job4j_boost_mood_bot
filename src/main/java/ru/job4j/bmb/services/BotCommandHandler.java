@@ -35,28 +35,16 @@ public class BotCommandHandler {
 
         switch (text) {
             case "/start":
-                return userOpt.flatMap(value -> handleStartCommand(value.getChatId(), clientId));
+                return userOpt.flatMap(user -> handleStartCommand(user.getChatId(), clientId));
 
             case "/week_mood_log":
-                if (userOpt.isPresent()) {
-                    return moodService.weekMoodLogCommand(userOpt.get().getChatId(), clientId);
-                } else {
-                    return Optional.empty();
-                }
+                userOpt.flatMap(user -> moodService.weekMoodLogCommand(userOpt.get().getChatId(), clientId));
 
             case "/month_mood_log":
-                if (userOpt.isPresent()) {
-                    return moodService.monthMoodLogCommand(userOpt.get().getChatId(), clientId);
-                } else {
-                    return Optional.empty();
-                }
+                userOpt.flatMap(user -> moodService.monthMoodLogCommand(userOpt.get().getChatId(), clientId));
 
             case "/award":
-                if (userOpt.isPresent()) {
-                    return moodService.awards(userOpt.get().getChatId(), clientId);
-                } else {
-                    return Optional.empty();
-                }
+                userOpt.flatMap(user -> moodService.awards(userOpt.get().getChatId(), clientId));
 
             default:
                 return Optional.empty();
