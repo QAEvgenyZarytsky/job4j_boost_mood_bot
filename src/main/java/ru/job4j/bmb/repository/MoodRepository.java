@@ -10,14 +10,4 @@ import java.util.List;
 public interface MoodRepository extends CrudRepository<Mood, Long> {
 
     List<Mood> findAll();
-
-    List<Mood> findByText(String text);
-
-    List<Mood> findByGoodTrue();
-
-    List<Mood> findByGoodFalse();
-
-    List<Mood> findByTextContainingIgnoreCase(String substring);
-
-    void deleteByText(String text);
 }
