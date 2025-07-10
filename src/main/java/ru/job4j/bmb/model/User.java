@@ -67,7 +67,7 @@ public class User {
         return Objects.hash(id);
     }
 
-    public User getfakeUser() {
+    public static User getfakeUser() {
         User fakeUser = new User();
         fakeUser.setId(1L);
         fakeUser.setClientId(100L);

@@ -14,13 +14,14 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static ru.job4j.bmb.model.User.getfakeUser;
 
 class ReminderServiceTest {
     @Test
     public void whenMoodGood() {
         UserFakeRepository userRepository = new UserFakeRepository();
-        User fakeUser = new User();
-        userRepository.addUser(fakeUser.getfakeUser());
+        User fakeUser = getfakeUser();
+        userRepository.addUser(fakeUser);
 
         var result = new ArrayList<Content>();
 
@@ -57,8 +58,8 @@ class ReminderServiceTest {
     @Test
     public void whenUserVotedTodayThenNoReminderSent() {
         UserFakeRepository userRepository = new UserFakeRepository();
-        User fakeUser = new User();
-        userRepository.addUser(fakeUser.getfakeUser());
+        User fakeUser = getfakeUser();
+        userRepository.addUser(fakeUser);
 
         var result = new ArrayList<Content>();
 
@@ -116,8 +117,8 @@ class ReminderServiceTest {
     @Test
     public void whenRemindingUsersThenContentHasCorrectTextAndButtons() {
         UserFakeRepository userRepository = new UserFakeRepository();
-        User fakeUser = new User();
-        userRepository.addUser(fakeUser.getfakeUser());
+        User fakeUser = getfakeUser();
+        userRepository.addUser(fakeUser);
 
         MoodLogFakeRepository moodLogRepository = new MoodLogFakeRepository();
 
