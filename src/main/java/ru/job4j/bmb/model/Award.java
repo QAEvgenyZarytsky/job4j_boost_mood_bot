@@ -60,7 +60,9 @@ public class Award {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Award award = (Award) o;
         return days == award.days && Objects.equals(id, award.id) && Objects.equals(title, award.title) && Objects.equals(description, award.description);
     }
