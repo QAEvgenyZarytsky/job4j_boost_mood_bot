@@ -2,6 +2,8 @@ package ru.job4j.bmb.model;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "mb_award")
 public class Award {
@@ -54,5 +56,17 @@ public class Award {
 
     public void setDays(int days) {
         this.days = days;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Award award = (Award) o;
+        return days == award.days && Objects.equals(id, award.id) && Objects.equals(title, award.title) && Objects.equals(description, award.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, description, days);
     }
 }

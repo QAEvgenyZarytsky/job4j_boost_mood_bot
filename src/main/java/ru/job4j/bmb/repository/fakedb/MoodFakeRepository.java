@@ -14,5 +14,4 @@ public class MoodFakeRepository
     public List<Mood> findAll() {
         return new ArrayList<>(memory.values());
     }
-
 }

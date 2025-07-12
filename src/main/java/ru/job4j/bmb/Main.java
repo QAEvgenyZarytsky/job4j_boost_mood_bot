@@ -18,7 +18,7 @@ import ru.job4j.bmb.repository.MoodContentRepository;
 import ru.job4j.bmb.repository.MoodRepository;
 import ru.job4j.bmb.services.TgRemoteService;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 @EnableAspectJAutoProxy
