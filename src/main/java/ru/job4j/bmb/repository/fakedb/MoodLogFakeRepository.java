@@ -1,36 +1,39 @@
 package ru.job4j.bmb.repository.fakedb;
 
+import org.springframework.stereotype.Repository;
 import org.springframework.test.fake.CrudRepositoryFake;
 import ru.job4j.bmb.model.MoodLog;
 import ru.job4j.bmb.model.User;
 import ru.job4j.bmb.repository.MoodLogRepository;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
+@Repository("moodFakeRepository")
 public class MoodLogFakeRepository
         extends CrudRepositoryFake<MoodLog, Long>
         implements MoodLogRepository {
+
+    private long count = 0;
 
     public List<MoodLog> findAll() {
         return new ArrayList<>(memory.values());
     }
 
     @Override
-    public List<MoodLog> findByUserId(Long userId) {
-        return memory.values().stream()
-                .filter(moodLog -> moodLog.getUser().getId().equals(userId))
-                .collect(Collectors.toList());
+    public <S extends MoodLog> S save(S entity) {
+        if (entity.getId() == null) {
+            entity.setId(++count);
+        }
+        return super.save(entity);
     }
 
     @Override
-    public Stream<MoodLog> findByUserIdOrderByCreatedAtDesc(Long userId) {
+    public List<MoodLog> findByUserId(Long userId) {
         return memory.values().stream()
-                .filter(moodLog -> moodLog.getUser().getId().equals(userId))
-                .sorted(Comparator.comparing(MoodLog::getCreatedAt).reversed());
+                .filter(moodLog -> moodLog.getUser() != null && userId.equals(moodLog.getUser().getId()))
+                .collect(Collectors.toList());
     }
 
     public List<User> findUsersWhoDidNotVoteToday(long startOfDay, long endOfDay, List<User> allUsers) {
@@ -41,22 +44,6 @@ public class MoodLogFakeRepository
 
         return allUsers.stream()
                 .filter(user -> !usersVotedToday.contains(user))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<MoodLog> findMoodLogsForWeek(Long userId, long weekStart) {
-        return memory.values().stream()
-                .filter(moodLog -> moodLog.getUser().getId().equals(userId))
-                .filter(moodLog -> moodLog.getCreatedAt() >= weekStart)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<MoodLog> findMoodLogsForMonth(Long userId, long monthStart) {
-        return memory.values().stream()
-                .filter(moodLog -> moodLog.getUser().getId().equals(userId))
-                .filter(moodLog -> moodLog.getCreatedAt() >= monthStart)
                 .collect(Collectors.toList());
     }
 

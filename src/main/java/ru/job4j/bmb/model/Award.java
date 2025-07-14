@@ -71,4 +71,18 @@ public class Award {
     public int hashCode() {
         return Objects.hash(id, title, description, days);
     }
+
+    @Override
+    public String toString() {
+        return "Award{"
+                + "id="
+                + id
+                + ", title='"
+                + title + '\''
+                + ", description='"
+                + description + '\''
+                + ", days="
+                + days
+                + '}';
+    }
 }

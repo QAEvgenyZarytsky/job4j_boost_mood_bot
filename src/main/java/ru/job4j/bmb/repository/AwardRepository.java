@@ -9,11 +9,4 @@ import java.util.List;
 @Repository
 public interface AwardRepository extends CrudRepository<Award, Long> {
     List<Award> findAll();
-
-    List<Award> findByTitle(String title);
-
-    long countByTitle(String title);
-
-    void deleteByTitle(String title);
-
 }

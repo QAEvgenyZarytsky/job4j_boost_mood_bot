@@ -50,4 +50,18 @@ public class Achievement {
     public void setAward(Award award) {
         this.award = award;
     }
+
+    @Override
+    public String toString() {
+        return "Achievement{"
+                + "id="
+                + id
+                + ", createAt="
+                + createAt
+                + ", user="
+                + user
+                + ", award="
+                + award
+                + '}';
+    }
 }

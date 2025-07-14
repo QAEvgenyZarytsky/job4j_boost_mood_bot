@@ -50,4 +50,18 @@ public class MoodLog {
     public void setCreatedAt(long createdAt) {
         this.createdAt = createdAt;
     }
+
+    @Override
+    public String toString() {
+        return "MoodLog{"
+                + "id="
+                + id
+                + ", user="
+                + user
+                + ", mood="
+                + mood
+                + ", createdAt="
+                + createdAt
+                + '}';
+    }
 }
