@@ -53,7 +53,6 @@ public class AchievementServiceTest {
 
     private User testUser;
 
-
     @BeforeEach
     void setup() {
         testUser = new User();
