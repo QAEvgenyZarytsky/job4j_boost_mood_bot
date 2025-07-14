@@ -19,7 +19,6 @@ public class AchievementFakeRepository extends CrudRepositoryFake<Achievement, I
         return new ArrayList<>(memory.values());
     }
 
-
     @Override
     public List<Achievement> findByUser(User user) {
         return memory.values().stream()
